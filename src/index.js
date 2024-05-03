@@ -42,7 +42,7 @@ app.post("/api/email", async (req, res) => {
 
   try {
     const info = await transporter.sendMail({
-      from: "<legal-clinic-yelets@mail.ru",
+      from: process.env.USER,
       to: "qwrerty2016@gmail.com",
       subject: "In Pulse",
       text: req?.body?.text,
