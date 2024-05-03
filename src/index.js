@@ -7,8 +7,6 @@ const port = 5000;
 
 const cors = require("cors");
 
-const bodyParser = require("body-parser");
-
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
@@ -29,12 +27,12 @@ app.use(
   })
 );
 
-app.use(bodyParser());
+app.use(express.json());
 
 app.post("/api/email", async (req, res) => {
   if (!req?.body?.text) {
     return res.status(400).send({
-      message: "no text",
+      message: "there is no text to send",
       code: 400,
       error: true,
     });
@@ -48,7 +46,10 @@ app.post("/api/email", async (req, res) => {
       text: req?.body?.text,
     });
 
-    res.status(200).send(info);
+    res.status(200).send({
+      error: false,
+      message: "the text has been sent",
+    });
   } catch (error) {
     res.status(500).send({
       code: 500,
